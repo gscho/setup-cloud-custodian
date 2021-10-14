@@ -20,5 +20,5 @@ runs:
       python3 -m venv custodian
       source custodian/bin/activate
       pip install c7n
-      custodian run -o ${{ inputs.output-dir }} ${{ inputs.policy }}"
+      custodian run -o ${{ inputs.output-dir }} ${{ inputs.policy }}
     shell: "bash"
