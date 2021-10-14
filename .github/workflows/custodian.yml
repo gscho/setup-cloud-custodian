@@ -1,0 +1,14 @@
+name: Cloud Custodian Run
+on:
+  workflow_dispatch:
+
+jobs:
+  cloud-custodian:
+    runs-on: ubuntu-latest
+    name: Run cloud custodian
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run custodian
+        uses: ./ # Uses an action in the root directory
+        id: custodian

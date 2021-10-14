@@ -1,0 +1,14 @@
+policies:
+
+- name: ec2-ownercontact-tag-compliance
+  resource: ec2
+  comment: |
+    Immediately stop instances without an OwnerContact tag
+    and terminate them after 1 day.
+  filters:
+    - "tag:OwnerContact": absent
+  actions:
+    - stop
+    - type: mark-for-op
+      op: terminate
+      days: 1

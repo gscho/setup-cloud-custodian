@@ -1,0 +1,25 @@
+name: 'cloud-custodian'
+description: 'Installs and runs cloud-custodian'
+inputs:
+  cloud-provider:
+    description: ""
+    required: true
+    default: "aws"
+  output-dir:
+    description: ""
+    required: true
+    default: "out"
+  policy:
+    description: ""
+    required: true
+    default: "policy.yml"
+runs:
+  using: "composite"
+  steps:
+  - run: |
+      python3 -m venv custodian
+      source custodian/bin/activate
+      pip install c7n
+    shell: "bash"
+  - run: "custodian run -o ${{ inputs.output-dir }} ${{ inputs.policy }}"
+    shell: "bash"
