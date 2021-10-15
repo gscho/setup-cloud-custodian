@@ -1,4 +1,4 @@
-# cloud-custodian-action
+# setup-cloud-custodian
 
 This action installs [cloud custodian](https://cloudcustodian.io/) and adds it to the `PATH`.
 

@@ -1,4 +1,4 @@
-name: 'Setup Cloud custodian'
+name: 'Setup Cloud Custodian'
 description: 'Set up the latest version of cloud custodian and add the
    CLI to the PATH'
 branding:
