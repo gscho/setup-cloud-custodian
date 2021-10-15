@@ -24,7 +24,7 @@ runs:
       cat << EOF > /usr/local/bin/custodian
       #!/bin/bash
       source ${dir}/custodian/bin/activate
-      custodian "$@"
+      custodian "\$@"
       EOF
       chmod +x /usr/local/bin/custodian
     shell: "bash"
