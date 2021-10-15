@@ -12,4 +12,4 @@ jobs:
       - name: Install
         uses: ./
       - name: Run
-        run: custodian -h
+        run: custodian run -h
