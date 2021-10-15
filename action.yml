@@ -1,6 +1,9 @@
 name: 'Setup Cloud custodian'
 description: 'Set up the latest version of cloud custodian and add the
    CLI to the PATH'
+branding:
+  icon: play-circle
+  color: yellow
 inputs:
   include-azure:
     description: "Installs the c7n_azure extension if set to true"
