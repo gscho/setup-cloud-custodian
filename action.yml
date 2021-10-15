@@ -10,7 +10,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - run: |
+  - shell: "bash"
+    run: |
       python3 -m venv custodian
       source custodian/bin/activate
       pip install c7n
@@ -27,4 +28,3 @@ runs:
       custodian "\$@"
       EOF
       chmod +x /usr/local/bin/custodian
-    shell: "bash"
