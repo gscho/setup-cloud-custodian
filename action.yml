@@ -14,10 +14,10 @@ runs:
       python3 -m venv custodian
       source custodian/bin/activate
       pip install c7n
-      if [ ${{ inputs.include-azure }} ]; then
+      if [ "${{ inputs.include-azure }}" == true ]; then
         pip install c7n_azure
       fi
-      if [ ${{ inputs.include-gcp }} ]; then
+      if [ "${{ inputs.include-gcp }}" == true ]; then
         pip install c7n_gcp
       fi
       dir=$(pwd)
@@ -26,5 +26,5 @@ runs:
       source ${dir}/custodian/bin/activate
       custodian "$@"
       EOF
-      chmod +X /usr/local/bin/custodian
+      chmod +x /usr/local/bin/custodian
     shell: "bash"
