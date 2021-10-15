@@ -1,18 +1,12 @@
 name: 'cloud-custodian'
 description: 'Installs and runs cloud-custodian'
 inputs:
-  cloud-provider:
-    description: ""
-    required: true
-    default: "aws"
-  output-dir:
-    description: ""
-    required: true
-    default: "out"
-  policy:
-    description: ""
-    required: true
-    default: "policy.yml"
+  include-azure:
+    description: "Installs the c7n_azure extension if set to true"
+    default: false
+  include-gcp:
+    description: "Installs the c7n_gcp extension if set to true"
+    default: false
 runs:
   using: "composite"
   steps:
@@ -20,5 +14,17 @@ runs:
       python3 -m venv custodian
       source custodian/bin/activate
       pip install c7n
-      custodian run -o ${{ inputs.output-dir }} ${{ inputs.policy }}
+      if [ ${{ inputs.include-azure }} ]; then
+        pip install c7n_azure
+      fi
+      if [ ${{ inputs.include-gcp }} ]; then
+        pip install c7n_gcp
+      fi
+      dir=$(pwd)
+      cat << EOF > /usr/local/bin/custodian
+      #!/bin/bash
+      source ${dir}/custodian/bin/activate
+      custodian "$@"
+      EOF
+      chmod +X /usr/local/bin/custodian
     shell: "bash"
