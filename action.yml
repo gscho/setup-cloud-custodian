@@ -1,5 +1,6 @@
-name: 'cloud-custodian'
-description: 'Installs and runs cloud-custodian'
+name: 'Setup Cloud custodian'
+description: 'Set up the latest version of cloud custodian and add the
+   CLI to the PATH'
 inputs:
   include-azure:
     description: "Installs the c7n_azure extension if set to true"
