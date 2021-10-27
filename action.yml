@@ -5,6 +5,8 @@ branding:
   icon: play-circle
   color: yellow
 inputs:
+  custodian-version:
+    description: "Install a particular version of cloud custodian"
   include-azure:
     description: "Installs the c7n_azure extension if set to true"
     default: false
@@ -18,12 +20,16 @@ runs:
     run: |
       python3 -m venv custodian
       source custodian/bin/activate
-      pip install c7n
+      VERSION_ARG=""
+      if [ "${{ inputs.custodian-version }}" ]; then
+        VERSION_ARG="== ${{ inputs.custodian-version }}"
+      fi
+      pip install -Iv c7n"${VERSION_ARG}"
       if [ "${{ inputs.include-azure }}" == true ]; then
-        pip install c7n_azure
+        pip install -Iv c7n_azure"${VERSION_ARG}"
       fi
       if [ "${{ inputs.include-gcp }}" == true ]; then
-        pip install c7n_gcp
+        pip install -Iv c7n_gcp"${VERSION_ARG}"
       fi
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
