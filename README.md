@@ -18,7 +18,7 @@ on:
   schedule:
     - cron: "00,30 * * * *"
 jobs:
-  test:
+  run-my-policy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -34,7 +34,7 @@ on:
   schedule:
     - cron: "00,30 * * * *"
 jobs:
-  test:
+  run-my-policy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -43,4 +43,21 @@ jobs:
         include-azure: true
         include-gcp: true
     - run: custodian run -s out path/to/my-policy.yml
+```
+
+## Installing a specific version
+
+```
+name: My workflow
+on:
+  workflow_dispatch:
+jobs:
+  print-version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: gscho/setup-cloud-custodian@v1
+      with:
+        custodian-version: '0.9.7.0'
+    - run: custodian version
 ```
