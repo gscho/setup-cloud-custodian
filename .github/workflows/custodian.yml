@@ -11,5 +11,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Install
         uses: ./
+        with:
+          custodian-version: '0.9.7.0'
       - name: Run
-        run: custodian run -h
+        run: custodian run -v
