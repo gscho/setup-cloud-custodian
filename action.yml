@@ -20,7 +20,10 @@ runs:
     run: |
       python3 -m venv custodian
       source custodian/bin/activate
-      VERSION_ARG="== ${{ inputs.custodian-version }}"
+      VERSION_ARG=""
+      if [ "${{ inputs.custodian-version }}" ]; then
+        VERSION_ARG="== ${{ inputs.custodian-version }}"
+      fi
       pip install -Iv c7n $VERSION_ARG
       if [ "${{ inputs.include-azure }}" == true ]; then
         pip install -Iv c7n_azure $VERSION_ARG
