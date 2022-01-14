@@ -20,6 +20,7 @@ jobs:
         with:
           include-azure: true
           include-gcp: true
+          include-c7n-org: true
       - name: Run
         run: |
           custodian schema

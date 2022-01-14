@@ -13,6 +13,10 @@ inputs:
   include-gcp:
     description: "Installs the c7n_gcp extension if set to true"
     default: false
+  include-c7n-org: 
+    description: "Installs the c7n-org extension if set to true"
+    default: false
+
 runs:
   using: "composite"
   steps:
@@ -26,10 +30,13 @@ runs:
       fi
       pip install -Iv c7n"${VERSION_ARG}"
       if [ "${{ inputs.include-azure }}" == true ]; then
-        pip install -Iv c7n_azure"${VERSION_ARG}"
+        pip install c7n_azure
       fi
       if [ "${{ inputs.include-gcp }}" == true ]; then
-        pip install -Iv c7n_gcp"${VERSION_ARG}"
+        pip install c7n_gcp
+      fi
+      if [ "${{ inputs.include-c7n-org }}" == true ]; then
+        pip install c7n-org
       fi
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
