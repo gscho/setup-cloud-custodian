@@ -13,6 +13,10 @@ inputs:
   include-gcp:
     description: "Installs the c7n_gcp extension if set to true"
     default: false
+  include-c7n-org: 
+    description: "Installs the c7n-org extension if set to true"
+    default: false
+
 runs:
   using: "composite"
   steps:
@@ -30,6 +34,9 @@ runs:
       fi
       if [ "${{ inputs.include-gcp }}" == true ]; then
         pip install -Iv c7n_gcp"${VERSION_ARG}"
+      fi
+      if [ "${{ inputs.include-c7n-org }}" == true ]; then
+        pip install -Iv c7n-org"${VERSION_ARG}
       fi
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
