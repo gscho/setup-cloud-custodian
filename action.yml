@@ -39,21 +39,21 @@ runs:
       chmod +x /usr/local/bin/custodian
 
   - name: "Install azure extension"
-    if: inputs.include-azure == true
+    if: ${{ inputs.include-azure }}
     shell: "bash"
     run: |
       source custodian/bin/activate
       pip install --quiet c7n_azure
 
   - name: "Install gcp extension"
-    if: inputs.include-gcp == true
+    if: ${{ inputs.include-gcp }}
     shell: "bash"
     run: |
       source custodian/bin/activate
       pip install --quiet c7n_gcp
 
   - name: "Install c7n-org extension"
-    if: inputs.include-c7n-org == true
+    if: ${{ inputs.include-c7n-org }}
     shell: "bash"
     run: |
       source custodian/bin/activate
