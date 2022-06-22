@@ -37,6 +37,7 @@ runs:
       fi
       if [ "${{ inputs.include-c7n-org }}" == true ]; then
         pip install c7n-org
+        export PATH=~/.local/bin/:$PATH
       fi
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
