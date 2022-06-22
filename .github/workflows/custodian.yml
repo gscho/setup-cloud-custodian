@@ -25,6 +25,8 @@ jobs:
         run: |
           custodian schema
           custodian version
+          echo "export PATH=\"`python3 -m site --user-base`/bin:\$PATH\"" >> ~/.bashrc
+          source ~/.bashrc
           c7n-org --help
       - name: Install Specific Version
         uses: ./
