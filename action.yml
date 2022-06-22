@@ -35,10 +35,6 @@ runs:
       if [ "${{ inputs.include-gcp }}" == true ]; then
         pip install c7n_gcp
       fi
-      if [ "${{ inputs.include-c7n-org }}" == true ]; then
-        pip install c7n-org
-        sudo ln -s "$(pwd)/.local/bin/c7n-org" /usr/local/bin/c7n-org
-      fi
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
       #!/bin/bash
@@ -46,3 +42,12 @@ runs:
       custodian "\$@"
       EOF
       chmod +x /usr/local/bin/custodian
+      if [ "${{ inputs.include-c7n-org }}" == true ]; then
+        pip install c7n-org
+        dir=$(pwd)
+        cat << EOF > /usr/local/bin/c7n-org
+        #!/bin/bash
+        ${dir}/.local/bin/c7n-org "\$@"
+        EOF
+        chmod +x /usr/local/bin/c7n-org
+      fi
