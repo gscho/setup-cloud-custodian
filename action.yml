@@ -20,7 +20,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - shell: "bash"
+  - name: "Install cloud custodian"
+    shell: "bash"
     run: |
       python3 -m venv custodian
       source custodian/bin/activate
@@ -28,16 +29,7 @@ runs:
       if [ "${{ inputs.custodian-version }}" ]; then
         VERSION_ARG="== ${{ inputs.custodian-version }}"
       fi
-      pip install -Iv c7n"${VERSION_ARG}"
-      if [ "${{ inputs.include-azure }}" == true ]; then
-        pip install c7n_azure
-      fi
-      if [ "${{ inputs.include-gcp }}" == true ]; then
-        pip install c7n_gcp
-      fi
-      if [ "${{ inputs.include-c7n-org }}" == true ]; then
-        pip install c7n-org
-      fi
+      pip install --quiet -Iv c7n"${VERSION_ARG}"
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
       #!/bin/bash
@@ -45,3 +37,31 @@ runs:
       custodian "\$@"
       EOF
       chmod +x /usr/local/bin/custodian
+
+  - name: "Install azure extension"
+    if: ${{ inputs.include-azure }}
+    shell: "bash"
+    run: |
+      source custodian/bin/activate
+      pip install --quiet c7n_azure
+
+  - name: "Install gcp extension"
+    if: ${{ inputs.include-gcp }}
+    shell: "bash"
+    run: |
+      source custodian/bin/activate
+      pip install --quiet c7n_gcp
+
+  - name: "Install c7n-org extension"
+    if: ${{ inputs.include-c7n-org }}
+    shell: "bash"
+    run: |
+      source custodian/bin/activate
+      pip install --quiet c7n-org
+      dir=$(pwd)
+      cat << EOF > /usr/local/bin/c7n-org
+      #!/bin/bash
+      source ${dir}/custodian/bin/activate
+      c7n-org "\$@"
+      EOF
+      chmod +x /usr/local/bin/c7n-org
