@@ -25,6 +25,7 @@ jobs:
         run: |
           custodian schema
           custodian version
+          c7n-org --help
       - name: Install Specific Version
         uses: ./
         with:
