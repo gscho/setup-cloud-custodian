@@ -29,7 +29,7 @@ runs:
       if [ "${{ inputs.custodian-version }}" ]; then
         VERSION_ARG="== ${{ inputs.custodian-version }}"
       fi
-      pip install -Iv c7n"${VERSION_ARG}"
+      pip install --quiet -Iv c7n"${VERSION_ARG}"
       dir=$(pwd)
       cat << EOF > /usr/local/bin/custodian
       #!/bin/bash
@@ -43,21 +43,21 @@ runs:
     shell: "bash"
     run: |
       source custodian/bin/activate
-      pip install c7n_azure
+      pip install --quiet c7n_azure
 
   - name: "Install gcp extension"
     if: inputs.include-gcp == true
     shell: "bash"
     run: |
       source custodian/bin/activate
-      pip install c7n_gcp
+      pip install --quiet c7n_gcp
 
   - name: "Install c7n-org extension"
     if: inputs.include-c7n-org == true
     shell: "bash"
     run: |
       source custodian/bin/activate
-      pip install c7n-org
+      pip install --quiet c7n-org
       dir=$(pwd)
       cat << EOF > /usr/local/bin/c7n-org
       #!/bin/bash
@@ -65,4 +65,3 @@ runs:
       c7n-org "\$@"
       EOF
       chmod +x /usr/local/bin/c7n-org
-      
